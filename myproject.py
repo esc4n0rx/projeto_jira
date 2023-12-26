@@ -2,22 +2,22 @@ import requests
 import pandas as pd
 from tqdm import tqdm
 
-# Sua URL de API, email e token
+
 url = "https://hnt.atlassian.net/rest/api/2/search?jql=project=LOG"
 email = "geovana.costa@hortifruti.com.br"
-token = "ATATT3xFfGF0juLiSw3dm8bu6ASQ2LcrPMwrtTsmEZG6E5BejTmmFN5gPewefN5L_cORkoUZyMkcQp9ZwR2KdntEaSxJVLGkc11sKYUjtvl0rl2ySl4V4EZbogP42OnfQwug3xaLwkwMpZ5kq0RZ-gcNuokxPTcgpy6oSQCGjk0Q4EKUAgrDGQY=B85D168E"
+token = "ATATT3xFfGF0kLnE7UPCTIz6hYhpDtDqPkdKxbJ9EiB25ZxsfGl6a7uDJ5QuYMWyckZJIGOtXh26sS3I-8c5tC57umsvyL1aoygb9YZN_44K4GzibrFNl3WRghdnDzqyb9-foxR9eHv1xTK7uAVftgJaZYv1gGQt2Dzu5LdnD0bx1lAtrq6oBwg=6C15CBC8"
 
 
-# Headers para a requisição
+
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
 
-# Autenticação
+
 auth = (email, token)
 
-# Realizando a requisição para obter todos os campos
+
 fields_response = requests.get("https://hnt.atlassian.net/rest/api/2/field", headers=headers, auth=auth)
 
 if fields_response.status_code != 200:
@@ -27,14 +27,14 @@ if fields_response.status_code != 200:
 
 fields = fields_response.json()
 
-# Mapeando os campos customizados
+
 custom_fields_map = {field['id']: field['name'] for field in fields if field.get('custom', False)}
 
-# Fazendo a requisição para a API do Jira
+
 response = requests.get(url, headers=headers, auth=auth)
 data_to_save = []
 
-# Verificando se a requisição foi bem sucedida
+
 if response.status_code == 200:
     data = response.json()
     total_issues = data['total']
